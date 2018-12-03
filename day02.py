@@ -1,8 +1,8 @@
 from collections import Counter
 
 with open('data/input02.txt') as f:
-    data = [list(line.strip('\n')) for line in f]
-
+    #data = [list(line.strip('\n')) for line in f]
+    data = [line.strip('\n') for line in f]
 def count_letters(word_str):
     '''
     Function that will create a dictionary of count of letters in box_id
@@ -29,4 +29,37 @@ def check_sum(data):
     print(doubles * triples)
 
 check_sum(data)
+
+# Part DEUX
+
+def char_in_common(data):
+    left_outs = Counter()
+
+    for datum in data:
+        for i in range(len(datum)):
+            #Here we are taking out character and squashing the rest
+            left_out = tuple(datum[:i] + "_" + datum[(i+1):])
+            left_outs[left_out] += 1
+
+    [(best, count), (not_best, not_best_count)] = left_outs.most_common(2)
+    return "".join([char for char in best if char != "_"])
+
+
+test_case = [
+    "abcde",
+    "fghij",
+    "klmno",
+    "pqrst",
+    "fguij",
+    "axcye",
+    "wvxyz"
+]
+
+assert char_in_common(test_case) == "fgij"
+
+print(char_in_common(data))
+
+
+
+
 
